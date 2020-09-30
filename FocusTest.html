@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Focus Test</title>
+		<style type="text/css">
+
+			body{
+				font-family: sans-serif;
+			}
+
+			#shape{
+				height: 200px;
+				width: 200px;
+				background-color: red;
+				display: none;
+				position: relative;
+			}
+
+			#sidebar{
+				position: fixed;
+				top: 10px;
+				left: 10px;
+				border: 3px solid black;
+				width: 320px;
+				height: 600px;
+				margin: 0px;
+				background-color: #000000;
+				color: #FFFFFF;
+			}
+
+			#canvas{
+				position: fixed;
+				top: 10px;
+				left: 335px;
+				border: 3px solid black;
+				float: left;
+				width: 1018px;
+				height: 600px;
+			}
+
+			.scoreBoard{
+				text-align: center;
+			}
+
+			#scoreBoardContent{
+				border: 1px solid #FFFFFF;
+				border-radius: 5px;
+				padding: 8px;
+			}
+
+			#totalTime{
+				border: 1px solid #FFFFFF;
+				border-radius: 5px;
+				padding: 8px 0px 8px 0px;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		
+		<div id="canvas">
+			<div id="shape"></div>
+		</div>
+
+		<div id="sidebar">
+			<h1 class="scoreBoard">TEST YOUR FOCUS</h1>
+			<p class="scoreBoard">CLICK ON THE OBJECT AS QUICK AS YOU CAN!</p>
+			<p class="scoreBoard" id="scoreBoardContent">YOUR TIME: <span id="timeTaken"></span></p>
+			<p id="totalTime" class="scoreBoard">YOUR SCORE: <span id="score"></span></p>
+		</div>
+
+
+		<script type="text/javascript">
+
+			var start = new Date().	getTime();
+
+			var totalTime = 0;
+
+			function makeShapeAppear(){
+
+				var top = Math.random() * 400;
+
+				var left = Math.random() * 900;
+
+				var width = (Math.random() * 200) + 100 ;
+
+				var height = (Math.random() * 350) + 20;
+
+				document.getElementById("shape").style.top = top + "px";
+
+				document.getElementById("shape").style.left = left + "px";
+
+				document.getElementById("shape").style.width = width + "px";
+
+				document.getElementById("shape").style.height = height + "px";
+
+				document.getElementById("shape").style.backgroundColor = getRandomColor();
+
+				document.getElementById("shape").style.display = "block";
+
+				if( Math.random() > 0.5 ){
+
+					document.getElementById("shape").style.borderRadius = "50%";
+				}
+				else{
+
+					document.getElementById("shape").style.borderRadius = "0";
+
+
+				}
+
+				start = new Date().getTime();
+			}
+
+			function getRandomColor(){
+
+				var letters = '0123456789ABCDEF'.split('');
+
+				var color = '#';
+
+				for(var i=0; i<6; i++) {
+
+					color += letters[ Math.floor( Math.random() *16 ) ];
+
+				}
+
+				return color;
+
+			}
+
+			function apperAfterDelay(){
+
+				setTimeout(makeShapeAppear, Math.random()*2000);
+
+			}
+
+			apperAfterDelay();
+
+			document.getElementById("shape").onclick = function(){
+
+				document.getElementById("shape").style.display = "none";
+
+				var end = new Date().getTime();
+
+				var timeTaken = (end - start) / 1000;
+
+				document.getElementById("timeTaken").innerHTML = timeTaken + "s";
+
+				totalTime = totalTime + timeTaken;
+
+				document.getElementById("score").innerHTML = Math.floor(totalTime) + "s";
+
+				apperAfterDelay();
+			}
+
+		</script>
+	</body>
+</html>
